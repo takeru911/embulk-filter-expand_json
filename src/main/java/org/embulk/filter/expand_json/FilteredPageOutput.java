@@ -314,7 +314,7 @@ public class FilteredPageOutput
               try{
                 pageBuilder.setString(expandedJsonColumn.getColumn(), finalValue);
               }catch(Exception e){
-                pageBuilder.setString(expandedJsonColumn.getColumn(), "");
+                pageBuilder.setString(expandedJsonColumn.getColumn(), "-");
               }
             }
             else if (Types.BOOLEAN.equals(expandedJsonColumn.getColumn().getType())) {
