@@ -211,14 +211,15 @@ public class FilteredPageOutput
     @Override
     public void add(Page page)
     {
-       try{
+
           pageReader.setPage(page);
           while (pageReader.nextRecord()) {
+                   try{
               try {
                   setExpandedJsonColumns();
                   setUnchangedColumns();
    
-                    pageBuilder.addRecord();
+                  pageBuilder.addRecord();
               }
               catch (DataException | JsonProcessingException e) {
                   if (stopOnInvalidRecord) {
@@ -226,10 +227,12 @@ public class FilteredPageOutput
                   }
                   logger.warn(String.format("Skipped an invalid record (%s)", e.getMessage()));
               }
-          }
-        }catch(ArrayIndexOutOfBoundsException e2){
+                      }catch(ArrayIndexOutOfBoundsException e2){
 
+                     break;
         }
+          }
+
           
     }
 
