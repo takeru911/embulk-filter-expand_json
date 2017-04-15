@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.lang.ArrayIndexOutOfBoundsException;
 
 import static org.embulk.filter.expand_json.ExpandJsonFilterPlugin.PluginTask;
 
@@ -215,7 +216,11 @@ public class FilteredPageOutput
             try {
                 setExpandedJsonColumns();
                 setUnchangedColumns();
-                pageBuilder.addRecord();
+                try{
+                  pageBuilder.addRecord();
+                }catch(ArrayIndexOutOfBoundsException e2){
+                  
+                }
             }
             catch (DataException | JsonProcessingException e) {
                 if (stopOnInvalidRecord) {
