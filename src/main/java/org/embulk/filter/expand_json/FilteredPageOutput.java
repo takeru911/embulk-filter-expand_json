@@ -211,24 +211,26 @@ public class FilteredPageOutput
     @Override
     public void add(Page page)
     {
-        pageReader.setPage(page);
-        while (pageReader.nextRecord()) {
-            try {
-                setExpandedJsonColumns();
-                setUnchangedColumns();
-                try{
-                  pageBuilder.addRecord();
-                }catch(ArrayIndexOutOfBoundsException e2){
-                  
-                }
-            }
-            catch (DataException | JsonProcessingException e) {
-                if (stopOnInvalidRecord) {
-                    throw new DataException(String.format("Found an invalid record"), e);
-                }
-                logger.warn(String.format("Skipped an invalid record (%s)", e.getMessage()));
-            }
+       try{
+          pageReader.setPage(page);
+          while (pageReader.nextRecord()) {
+              try {
+                  setExpandedJsonColumns();
+                  setUnchangedColumns();
+   
+                    pageBuilder.addRecord();
+              }
+              catch (DataException | JsonProcessingException e) {
+                  if (stopOnInvalidRecord) {
+                      throw new DataException(String.format("Found an invalid record"), e);
+                  }
+                  logger.warn(String.format("Skipped an invalid record (%s)", e.getMessage()));
+              }
+          }
+        }catch(ArrayIndexOutOfBoundsException e2){
+
         }
+          
     }
 
     @Override
