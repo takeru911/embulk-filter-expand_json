@@ -311,7 +311,11 @@ public class FilteredPageOutput
             }
 
             if (Types.STRING.equals(expandedJsonColumn.getColumn().getType())) {
+              try{
                 pageBuilder.setString(expandedJsonColumn.getColumn(), finalValue);
+              }catch(Exception e){
+                pageBuilder.setString(expandedJsonColumn.getColumn(), "");
+              }
             }
             else if (Types.BOOLEAN.equals(expandedJsonColumn.getColumn().getType())) {
                 pageBuilder.setBoolean(expandedJsonColumn.getColumn(), Boolean.parseBoolean(finalValue));
